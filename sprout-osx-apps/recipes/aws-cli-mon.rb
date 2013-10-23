@@ -1,4 +1,5 @@
 include_recipe "sprout-osx-apps::java"
+include_recipe 'sprout-osx-base::bash_it'
 
 remote_file "/tmp/CloudWatch.zip" do
   source "http://ec2-downloads.s3.amazonaws.com/CloudWatch-2010-08-01.zip"
@@ -15,12 +16,6 @@ execute "mv /tmp/CloudWatch/* ~/aws-cli/mon; rm -rf /tmp/CloudWatch" do
   not_if { File.exists?("~/aws-cli/mon/README.TXT") }
 end
 
-# use template and bashit
-#
-#file "#{node['sprout']['home']}/.profile.aws.mon" do
-#  content <<-EOS
-#  export AWS_CLOUDWATCH_HOME=~/aws-cli/mon
-#  export PATH=$PATH:$AWS_CLOUDWATCH_HOME/bin
-#  EOS
-#  mode 0644
-#end
+sprout_osx_base_bash_it_custom_plugin 'bash_it/custom/aws-cli-mon.bash' do
+    cookbook 'sprout-osx-apps'
+end
