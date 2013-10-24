@@ -16,7 +16,7 @@ execute "unzip /tmp/CloudWatch.zip -d /tmp/CloudWatch" do
   not_if { File.exists?("/tmp/CloudWatch") }
 end
 
-execute "mv /tmp/CloudWatch/* ~/aws-cli/mon; rm -rf /tmp/CloudWatch" do
+execute "mv /tmp/CloudWatch/CloudWatch*/* ~/aws-cli/mon; rm -rf /tmp/CloudWatch" do
   action :run
   not_if { File.exists?("~/aws-cli/mon/README.TXT") }
 end
